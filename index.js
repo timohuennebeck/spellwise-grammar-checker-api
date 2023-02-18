@@ -60,6 +60,20 @@ app.post("/openai-slash", async (req, res) => {
     res.send(elaboration);
 });
 
+app.post("/openai-edit", async (req, res) => {
+    console.log(req.body);
+
+    const response = await openai.createEdit({
+        model: "text-davinci-edit-001",
+        input: req.body.prompt,
+        instruction: "Fix the spelling mistakes",
+    });
+
+    const elaboration = response.data.choices[0].text.trim();
+    // return the requests
+    res.send(elaboration);
+});
+
 app.get("/", (_req, res) => {
     res.send("Hello World!");
 });
